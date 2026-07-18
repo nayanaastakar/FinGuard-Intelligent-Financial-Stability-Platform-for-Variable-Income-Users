@@ -162,10 +162,13 @@ export default function App() {
     const saved = localStorage.getItem('cardLimitValue');
     return saved !== null ? parseInt(saved, 10) : 12000;
   });
-  const [stabilityVaultBalance, setStabilityVaultBalance] = useState(() => {
-    const saved = localStorage.getItem('stabilityVaultBalance');
-    return saved !== null ? parseFloat(saved) : 937.50;
-  });
+  const [stabilityVaultBalance, setStabilityVaultBalance] = useState(0.0);
+
+  useEffect(() => {
+    if (dashboardData && stabilityVaultBalance === 0 && dashboardData.balance > 0) {
+      setStabilityVaultBalance(Math.floor(dashboardData.balance * 0.15 * 100) / 100);
+    }
+  }, [dashboardData, stabilityVaultBalance]);
 
   useEffect(() => {
     localStorage.setItem('isAutoSweepActive', JSON.stringify(isAutoSweepActive));
@@ -269,6 +272,7 @@ export default function App() {
             id: exp.id || Math.random(),
             date: exp.date,
             expenseAmount: exp.amount,
+            category: exp.category,
             roundedTo: rounded,
             spareChange: spare,
             goalName: activeSavingsGoals[bucketIndex]?.name || 'Reserve Bucket'
@@ -1176,12 +1180,7 @@ export default function App() {
     const dailyData = {};
     
     if (transactions.length === 0) {
-      return [
-        { date: '05-10', inflow: 1200, outflow: 400, netReserve: 800 },
-        { date: '05-12', inflow: 1850, outflow: 600, netReserve: 1250 },
-        { date: '05-15', inflow: 3200, outflow: 1500, netReserve: 1700 },
-        { date: '05-18', inflow: 6250, outflow: 4051, netReserve: 2199 }
-      ];
+      return [];
     }
     
     let runningInflow = 0;
@@ -2793,10 +2792,13 @@ export default function App() {
             {(() => {
               const getFsiHistory = () => {
                 const currentFsi = dashboardData.stabilityScore;
+                if (currentFsi === 0) {
+                  return ['Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'].map(month => ({ month, score: 0 }));
+                }
                 const months = ['Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'];
                 const baseOffset = [ -6.5, -4.2, -8.1, 2.5, -1.8, 0 ];
                 return months.map((month, idx) => {
-                  const pointScore = Math.max(30, Math.min(100, currentFsi + baseOffset[idx]));
+                  const pointScore = Math.max(0, Math.min(100, currentFsi + baseOffset[idx]));
                   return {
                     month,
                     score: parseFloat(pointScore.toFixed(1))
@@ -3022,7 +3024,7 @@ export default function App() {
                     No round-ups yet. Enable Auto Round-Ups and log an expense to start saving spare change!
                   </div>
                 ) : (
-                  <div style={{ overflowX: 'auto' }}>
+                  <div style={{ overflowX: 'auto', maxHeight: '350px', overflowY: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
                       <thead>
                         <tr style={{ borderBottom: '1px solid var(--border-color)', color: 'var(--text-secondary)', textAlign: 'left' }}>

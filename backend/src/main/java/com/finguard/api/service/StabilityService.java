@@ -80,7 +80,7 @@ public class StabilityService {
         boolean noData = incomeMonthly.stream().allMatch(d -> d == 0.0) && expenseMonthly.stream().allMatch(d -> d == 0.0);
         if (noData) {
             return new StabilityResponse(
-                    70.0,
+                    0.0,
                     0.0,
                     "LOW",
                     "Welcome! Start adding your income and expenses. We will show you a simple money health score and easy tips for you.",

@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/savings-goals")
+@RequestMapping("/api/savings")
 @Tag(name = "Savings Goal Module", description = "Endpoints for managing user savings goals, targets, and automatic contributions.")
 public class SavingsGoalController {
 

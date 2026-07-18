@@ -169,23 +169,23 @@ export const finguardApi = {
     }).then(parseResponse),
 
   getSavingsGoals: (token) =>
-    fetch(`${API_BASE}/savings-goals`, { headers: authHeaders(token) }).then(parseResponse),
+    fetch(`${API_BASE}/savings`, { headers: authHeaders(token) }).then(parseResponse),
 
   addSavingsGoal: (token, body) =>
-    fetch(`${API_BASE}/savings-goals`, {
+    fetch(`${API_BASE}/savings`, {
       method: 'POST',
       headers: jsonHeaders(token),
       body: JSON.stringify(body)
     }).then(parseResponse),
 
   contributeToSavingsGoal: (token, id, amount) =>
-    fetch(`${API_BASE}/savings-goals/${id}/contribute?amount=${amount}`, {
+    fetch(`${API_BASE}/savings/${id}/contribute?amount=${amount}`, {
       method: 'POST',
       headers: authHeaders(token)
     }).then(parseResponse),
 
   deleteSavingsGoal: (token, id) =>
-    fetch(`${API_BASE}/savings-goals/${id}`, {
+    fetch(`${API_BASE}/savings/${id}`, {
       method: 'DELETE',
       headers: authHeaders(token)
     }).then(parseResponse)

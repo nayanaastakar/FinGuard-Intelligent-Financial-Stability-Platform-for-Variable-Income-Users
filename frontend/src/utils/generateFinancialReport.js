@@ -4,23 +4,7 @@ import { generateFinancialRecommendations } from './spendingInsights';
 import { sanitizePdfText, formatInrForPdf } from './pdfText';
 
 async function captureElement(element, scale = 2) {
-  if (!element || element.offsetWidth === 0 || element.offsetHeight === 0) return null;
-  try {
-    const canvas = await html2canvas(element, {
-      scale,
-      useCORS: true,
-      backgroundColor: '#0f172a',
-      logging: false,
-    });
-    return {
-      dataUrl: canvas.toDataURL('image/png'),
-      width: canvas.width,
-      height: canvas.height,
-    };
-  } catch (error) {
-    console.warn('Failed to capture element for PDF', error);
-    return null; // Skip this image safely instead of crashing the whole PDF
-  }
+  return null; // Snapshots removed per user preference for a cleaner text report
 }
 
 function addImageFitPage(doc, image, x, y, maxWidth, maxHeight) {
@@ -269,42 +253,7 @@ export async function generateFinancialReport({
     });
   }
 
-  if (captureRoot) {
-    const snapshot = await captureElement(captureRoot, 1.5);
-    if (snapshot) {
-      doc.addPage();
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(12);
-      doc.text(sanitizePdfText(t('pdf.dashboardSnapshot')), margin, margin);
-      addImageFitPage(
-        doc,
-        snapshot,
-        margin,
-        margin + 8,
-        pageWidth - margin * 2,
-        120
-      );
-    }
-  }
-
-  for (const selector of chartSelectors) {
-    const element = document.querySelector(selector);
-    const snapshot = await captureElement(element, 1.5);
-    if (!snapshot) continue;
-
-    doc.addPage();
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
-    doc.text(sanitizePdfText(element?.dataset?.reportTitle || t('pdf.chart')), margin, margin);
-    addImageFitPage(
-      doc,
-      snapshot,
-      margin,
-      margin + 8,
-      pageWidth - margin * 2,
-      110
-    );
-  }
+  // Snapshots removed to make the report cleaner and strictly text-based
 
   const fileName = `FinGuard_Report_${(user?.username || 'user')}_${new Date().toISOString().split('T')[0]}.pdf`;
   doc.save(fileName);
