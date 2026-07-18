@@ -1,4 +1,4 @@
-﻿# FinGuard API 🛡️
+# FinGuard API 🛡️
 
 **Intelligent Financial Stability Advisor & Transaction Anomaly Shield**
 
@@ -28,26 +28,26 @@ FinGuard API is a production-grade full-stack financial platform designed to hel
 ## 📂 Repository Layout
 ```text
 FinGuardAPI/
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ src/main/java/com/finguard/api/
-â”‚   â”‚   â”œâ”€â”€ config/          # JWT Security, Web CORS, Data Seeder
-â”‚   â”‚   â”œâ”€â”€ controller/      # REST API Controllers (Swagger Annotated)
-â”‚   â”‚   â”œâ”€â”€ dto/             # Immutable Java 17 records
-â”‚   â”‚   â”œâ”€â”€ entity/          # JPA Hibernate Entities
-â”‚   â”‚   â”œâ”€â”€ exception/       # Global RestAdvice Interceptors
-â”‚   â”‚   â”œâ”€â”€ repository/      # Spring Data JPA interfaces
-â”‚   â”‚   â””â”€â”€ service/         # Business Logic, FSI Math, Anomaly Interceptors
-â”‚   â”œâ”€â”€ pom.xml              # Maven configuration
-â”‚   â””â”€â”€ Dockerfile
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ App.jsx          # Main SPA (State management, API integration, views)
-â”‚   â”‚   â”œâ”€â”€ index.css        # Slate Dark global stylesheets and utility classes
-â”‚   â”‚   â””â”€â”€ main.jsx         # React DOM renderer
-â”‚   â”œâ”€â”€ package.json         # npm dependencies
-â”‚   â”œâ”€â”€ vite.config.js       # Vite configuration
-â”‚   â””â”€â”€ Dockerfile
-â””â”€â”€ docker-compose.yml       # Orchestrated multi-stage local containers
+|-- backend/
+|   |-- src/main/java/com/finguard/api/
+|   |   |-- config/          # JWT Security, Web CORS, Data Seeder
+|   |   |-- controller/      # REST API Controllers (Swagger Annotated)
+|   |   |-- dto/             # Immutable Java 17 records
+|   |   |-- entity/          # JPA Hibernate Entities
+|   |   |-- exception/       # Global RestAdvice Interceptors
+|   |   |-- repository/      # Spring Data JPA interfaces
+|   |   `-- service/         # Business Logic, FSI Math, Anomaly Interceptors
+|   |-- pom.xml              # Maven configuration
+|   `-- Dockerfile
+|-- frontend/
+|   |-- src/
+|   |   |-- App.jsx          # Main SPA (State management, API integration, views)
+|   |   |-- index.css        # Slate Dark global stylesheets and utility classes
+|   |   `-- main.jsx         # React DOM renderer
+|   |-- package.json         # npm dependencies
+|   |-- vite.config.js       # Vite configuration
+|   `-- Dockerfile
+`-- docker-compose.yml       # Orchestrated multi-stage local containers
 ```
 
 ---
